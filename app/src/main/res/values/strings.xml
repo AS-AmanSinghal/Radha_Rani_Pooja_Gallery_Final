@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Radha Rani Pooja Gallery</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_change_password">Change Password</string>
+    <string name="action_log_out">Log Out</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_my_photo">My Photo</string>
+    <string name="menu_upload">Upload</string>
+    <string name="menu_coupons">Coupons</string>
+    <string name="qr_code">QR Code</string>
+    <string name="developer">Developer</string>
+    <string name="logout">Log Out</string>
+</resources>
