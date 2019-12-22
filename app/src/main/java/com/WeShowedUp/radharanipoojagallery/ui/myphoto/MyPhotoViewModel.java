@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.WeShowedUp.radharanipoojagallery.Controller.PhotoActivity;
@@ -65,7 +66,7 @@ public class MyPhotoViewModel extends RecyclerView.Adapter<MyPhotoViewModel.View
     {
         private ImageView image;
         private TextView name,price,date,verified,like,share;
-        private LinearLayout card;
+        private CardView card;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
