@@ -16,4 +16,5 @@
     <string name="qr_code">QR Code</string>
     <string name="developer">Developer</string>
     <string name="logout">Log Out</string>
+    <string name="remember_me">Remember Me</string>
 </resources>

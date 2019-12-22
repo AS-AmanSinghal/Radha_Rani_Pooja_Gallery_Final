@@ -1,7 +1,8 @@
-package com.WeShowedUp.radharanipoojagallery;
+package com.WeShowedUp.radharanipoojagallery.Controller;
 
 import android.os.Bundle;
 
+import com.WeShowedUp.radharanipoojagallery.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

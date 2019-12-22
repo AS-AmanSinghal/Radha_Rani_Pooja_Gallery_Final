@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.WeShowedUp.radharanipoojagallery.MainActivity;
 import com.WeShowedUp.radharanipoojagallery.R;
 import com.google.android.material.snackbar.Snackbar;
 
