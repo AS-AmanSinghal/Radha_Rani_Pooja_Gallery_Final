@@ -52,13 +52,14 @@ public class MyPhotoViewModel extends RecyclerView.Adapter<MyPhotoViewModel.View
             public void onClick(View v)
             {
                 Intent intent=new Intent(context, PhotoActivity.class);
-                intent.putExtra("post_id",Myphotos.get(i).getId());
+                intent.putExtra("post_id",String.valueOf(Myphotos.get(i).getId()));
                 intent.putExtra("image",Myphotos.get(i).getUrl());
                 intent.putExtra("message",Myphotos.get(i).getMessage());
-                intent.putExtra("price",Myphotos.get(i).getPrice());
-                intent.putExtra("likes",Myphotos.get(i).getLikes());
-                intent.putExtra("shares",Myphotos.get(i).getShares());
+                intent.putExtra("price",String.valueOf(Myphotos.get(i).getPrice()));
+                intent.putExtra("likes",String.valueOf(Myphotos.get(i).getLikes()));
+                intent.putExtra("shares",String.valueOf(Myphotos.get(i).getShares()));
                 intent.putExtra("date",Myphotos.get(i).getCreationTime());
+                intent.putExtra("status",String.valueOf(Myphotos.get(i).getStatus()));
                 context.startActivity(intent);
             }
         });

@@ -1,32 +1,22 @@
 package com.WeShowedUp.radharanipoojagallery.ui.coupon;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.WeShowedUp.radharanipoojagallery.General.RetrofitClass;
-import com.WeShowedUp.radharanipoojagallery.Lists.Coupon;
 import com.WeShowedUp.radharanipoojagallery.R;
 import com.WeShowedUp.radharanipoojagallery.Response.CouponResponse.Datum;
 import com.google.gson.JsonObject;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

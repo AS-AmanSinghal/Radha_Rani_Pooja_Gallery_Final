@@ -2,31 +2,22 @@ package com.WeShowedUp.radharanipoojagallery.ui.coupon;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.WeShowedUp.radharanipoojagallery.Controller.CouponActivity;
-import com.WeShowedUp.radharanipoojagallery.Lists.Coupon;
 import com.WeShowedUp.radharanipoojagallery.R;
 import com.WeShowedUp.radharanipoojagallery.Response.CouponResponse.Datum;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.List;
-
-import static android.graphics.Color.BLACK;
 
 public class CouponViewModel extends RecyclerView.Adapter<CouponViewModel.ViewHolder> {
    private LayoutInflater inflater;
