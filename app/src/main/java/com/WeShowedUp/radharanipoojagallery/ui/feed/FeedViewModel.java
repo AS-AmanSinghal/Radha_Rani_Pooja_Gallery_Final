@@ -1,4 +1,4 @@
-package com.WeShowedUp.radharanipoojagallery.ui.myphoto;
+package com.WeShowedUp.radharanipoojagallery.ui.feed;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +19,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MyPhotoViewModel extends RecyclerView.Adapter<MyPhotoViewModel.ViewHolder>
+public class FeedViewModel extends RecyclerView.Adapter<FeedViewModel.ViewHolder>
 {
 
     private Context context;
     private LayoutInflater inflater;
     private List<Datum> Myphotos;
 //    private List<MyPhoto> Myphotos;
-    public MyPhotoViewModel(Context context, List<Datum> myphotos) {
+    public FeedViewModel(Context context, List<Datum> myphotos) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         Myphotos = myphotos;

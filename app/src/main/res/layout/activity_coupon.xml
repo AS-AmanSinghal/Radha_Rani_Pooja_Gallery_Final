@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:gravity="center">
         <ImageView
-
+            android:id="@+id/qrcode"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:src="@drawable/qr"/>

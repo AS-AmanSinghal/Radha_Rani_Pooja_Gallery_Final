@@ -1,4 +1,4 @@
-package com.WeShowedUp.radharanipoojagallery.ui.myphoto;
+package com.WeShowedUp.radharanipoojagallery.ui.feed;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MyPhotoFragment extends Fragment
+public class FeedFragment extends Fragment
 {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -39,7 +39,7 @@ public class MyPhotoFragment extends Fragment
     }
 
     private RecyclerView recyclerView;
-    private MyPhotoViewModel adapter;
+    private FeedViewModel adapter;
     private List<Datum> myPhotolist=new ArrayList<>();
 //    private List<MyPhoto> myPhotolist=new ArrayList<>();
     @Override
@@ -49,7 +49,7 @@ public class MyPhotoFragment extends Fragment
         recyclerView=view.findViewById(R.id.recycler_myphoto);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         new MyPhoto().execute();
-        adapter=new MyPhotoViewModel(getContext(),myPhotolist);
+        adapter=new FeedViewModel(getContext(),myPhotolist);
         recyclerView.setAdapter(adapter);
     }
 
@@ -60,7 +60,7 @@ public class MyPhotoFragment extends Fragment
         protected Void doInBackground(Void... voids)
         {
             RetrofitClass retrofitClass=new RetrofitClass();
-            Call<JsonObject> call=retrofitClass.retrofit().post(getActivity().getIntent().getStringExtra("phone"));
+            Call<JsonObject> call=retrofitClass.retrofit().feed();
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
@@ -87,7 +87,7 @@ public class MyPhotoFragment extends Fragment
                             e.printStackTrace();
                         }
 
-                        adapter=new MyPhotoViewModel(getContext(),myPhotolist);
+                        adapter=new FeedViewModel(getContext(),myPhotolist);
                         adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);
                     }

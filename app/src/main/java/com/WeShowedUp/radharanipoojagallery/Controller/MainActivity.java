@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home,R.id.nav_my_photo,
+                R.id.nav_feed,
                 R.id.nav_upload, R.id.nav_coupons)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         BottomNavigationView navigationViewB = findViewById(R.id.nav_view_bottom);
         NavController navControllerB = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navControllerB, mAppBarConfiguration);

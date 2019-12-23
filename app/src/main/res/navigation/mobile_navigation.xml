@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_my_photo">
+    app:startDestination="@+id/nav_feed">
 
     <fragment
         android:id="@+id/nav_home"
@@ -34,6 +34,12 @@
         android:name="com.WeShowedUp.radharanipoojagallery.ui.coupon.CouponFragment"
         android:label="@string/menu_coupons"
         tools:layout="@layout/fragment_coupon" />
+
+    <fragment
+        android:id="@+id/nav_feed"
+        android:name="com.WeShowedUp.radharanipoojagallery.ui.feed.FeedFragment"
+        android:label="@string/menu_feed"
+        tools:layout="@layout/fragment_myphoto" />
 <!--    <fragment-->
 <!--        android:id="@+id/nav_send"-->
 <!--        android:name="com.WeShowedUp.radharanipoojagallery.ui.send.SendFragment"-->

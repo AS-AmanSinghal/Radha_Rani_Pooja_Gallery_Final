@@ -2,11 +2,14 @@ package com.WeShowedUp.radharanipoojagallery.Module;
 
 import com.WeShowedUp.radharanipoojagallery.Response.LoginResponse.LoginResponse;
 import com.WeShowedUp.radharanipoojagallery.Response.RegistrationResponse.RegistrationResponse;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface Login_Interface
 {
@@ -25,4 +28,17 @@ public interface Login_Interface
             @Field("phone") String phone,
             @Field("password") String password
     );
+
+    @GET("posts/{phone}")
+    Call<JsonObject> post(
+            @Path("phone") String phone
+    );
+
+    @GET("coupons/{id}")
+    Call<JsonObject> coupon(
+            @Path("id") String phone
+    );
+
+    @GET("getFeed")
+    Call<JsonObject> feed();
 }
