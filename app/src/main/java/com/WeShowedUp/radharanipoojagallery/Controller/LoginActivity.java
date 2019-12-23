@@ -1,7 +1,9 @@
 package com.WeShowedUp.radharanipoojagallery.Controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -89,44 +91,75 @@ public class LoginActivity extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
             Snackbar.make(getWindow().getDecorView(), "Enter Mobile Number/Password", Snackbar.LENGTH_SHORT).show();
             button.setEnabled(true);
-        } else {
-            login(mobile, password);
+        } else
+            {
+              new Login(mobile, password).execute();
+
+            //login(mobile, password);
         }
     }
 
-    private void login(final String mobile, final String password) {
-        RetrofitClass retrofitClass = new RetrofitClass();
-        Call<LoginResponse> call = retrofitClass.retrofit().login(mobile, password);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (response.body() != null) {
-                    if (response.body().getFlag()) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("phone", mobile);
-                        if (checkBox.isChecked()) {
-                            sharedPrefManager.putString(LoginActivity.this, "phone", String.valueOf(response.body().getData().getPhone()).trim());
-                            sharedPrefManager.putString(LoginActivity.this, "password", String.valueOf(password));
+    public class Login extends AsyncTask<Void,Void,Void>
+    {
+        private String mobile;
+        private String password;
+
+        public Login(String mobile, String password)
+        {
+            this.mobile = mobile;
+            this.password= password;
+        }
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            Log.d("Mobile", "doInBackground: "+mobile);
+            Log.d("Password", "doInBackground: "+password);
+            try
+            {
+                RetrofitClass retrofitClass = new RetrofitClass();
+                Call<LoginResponse> call = retrofitClass.retrofit().login(mobile, password);
+                call.enqueue(new Callback<LoginResponse>()
+                {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if (response.body() != null) {
+                            if (response.body().getFlag()) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("phone", mobile);
+                                if (checkBox.isChecked()) {
+                                    sharedPrefManager.putString(LoginActivity.this, "phone", String.valueOf(response.body().getData().getPhone()).trim());
+                                    sharedPrefManager.putString(LoginActivity.this, "password", String.valueOf(password));
+                                }
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                hideSoftKey();
+                                button.setEnabled(true);
+                                Snackbar.make(getWindow().getDecorView(), "User Does not Exists", Snackbar.LENGTH_SHORT).show();
+                            }
                         }
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        hideSoftKey();
-                        button.setEnabled(true);
-                        Snackbar.make(getWindow().getDecorView(), "User Does not Exists", Snackbar.LENGTH_SHORT).show();
                     }
-                }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        button.setEnabled(true);
+                        hideSoftKey();
+                        Snackbar.make(getWindow().getDecorView(), "Bad Connection Try Again!!", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                hideSoftKey();
+                Snackbar.make(getWindow().getDecorView(),"Try Again",Snackbar.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                progressBar.setVisibility(View.INVISIBLE);
-                button.setEnabled(true);
-                hideSoftKey();
-                Snackbar.make(getWindow().getDecorView(), "Bad Connection Try Again!!", Snackbar.LENGTH_SHORT).show();
-            }
-        });
+            return null;
+        }
+    }
+    private void login(final String mobile, final String password) {
     }
 
     private void hideSoftKey() {

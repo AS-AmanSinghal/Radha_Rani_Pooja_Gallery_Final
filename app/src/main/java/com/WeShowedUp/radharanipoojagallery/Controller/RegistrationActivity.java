@@ -6,22 +6,35 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.WeShowedUp.radharanipoojagallery.General.RetrofitClass;
 import com.WeShowedUp.radharanipoojagallery.R;
+import com.WeShowedUp.radharanipoojagallery.Response.RegistrationResponse.RegistrationResponse;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-public class RegistrationActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class RegistrationActivity extends AppCompatActivity
+{
 
     EditText username,password,conf_password;
     Button button;
@@ -37,12 +50,50 @@ public class RegistrationActivity extends AppCompatActivity {
         password=findViewById(R.id.registration_password);
         conf_password=findViewById(R.id.registration_conf_password);
         button=findViewById(R.id.registration_btn);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
 
+                if (String.valueOf(password.getText()).trim().equals(String.valueOf(conf_password.getText()).trim()))
+                {
+                    registration(String.valueOf(username.getText()).trim(),String.valueOf(password.getText()).trim());
+                }
+                else
+                {
+                    Snackbar.make(getWindow().getDecorView(),"Password Does not Match",Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void registration(String mobile, String password)
+    {
+        if (mobile.isEmpty() && password.isEmpty())
+        {
+            Snackbar.make(getWindow().getDecorView(),"Enter Mobile Number/Password",Snackbar.LENGTH_SHORT).show();
+        }
+        else
+        {
+           new Login(mobile,password).execute();
+        }
+    }
+
+    public class Login extends AsyncTask<Void,Void,Void>
+    {
+        private String mobile="";
+        private String password="";
+
+        Login(String mobile,String password)
+        {
+            this.mobile=mobile;
+            this.password=password;
+        }
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            try
+            {
                 if (Build.VERSION.SDK_INT>=22)
                 {
                     checkResequestForPermission();
@@ -52,12 +103,72 @@ public class RegistrationActivity extends AppCompatActivity {
                     ContactList();
                 }
             }
-        });
+            catch (Exception e)
+            {
+                Log.d("registration exception", ""+e);
+            }
+            return null;
+        }
     }
 
     private void ContactList()
     {
-        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+        new Contact(String.valueOf(username.getText()).trim(),String.valueOf(password.getText()).trim()).execute();
+    }
+
+    public class Contact extends AsyncTask<Void,Void,Void>
+    {
+        private String mobile;
+        private String password;
+
+        public Contact(String mobile, String password)
+        {
+            this.mobile = mobile;
+            this.password = password;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            RetrofitClass retrofitClass=new RetrofitClass();
+            Call<RegistrationResponse> call=retrofitClass.retrofit().registration(mobile,password);
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response)
+                {
+                    if (response.body()!=null)
+                    {
+                        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t)
+                {
+                    Snackbar.make(getWindow().getDecorView(),"Bad Connection Try Again",Snackbar.LENGTH_SHORT).show();
+                }
+            });
+
+
+            ContentResolver contentResolver=getContentResolver();
+            Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
+            if (cursor!=null)
+                while (cursor.moveToNext())
+                {
+                    String id=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    String name=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    Cursor phoneCursor=contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",new String[]{id},null);
+
+                    if (phoneCursor!=null)
+                        while (phoneCursor.moveToNext())
+                        {
+                            String phoneNumber=phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            Log.d("Phone Number", "checkResequestForPermission: "+phoneNumber);
+                        }
+                }
+            return null;
+        }
     }
 
     private void checkResequestForPermission()
@@ -67,26 +178,18 @@ public class RegistrationActivity extends AppCompatActivity {
         {
             if (ActivityCompat.shouldShowRequestPermissionRationale(RegistrationActivity.this,Manifest.permission.READ_CONTACTS))
             {
+                ActivityCompat.requestPermissions(RegistrationActivity.this,new String[]{Manifest.permission.READ_CONTACTS},PReCode);
                 Snackbar.make(getWindow().getDecorView(),"Accept the Contact Permission",Snackbar.LENGTH_SHORT).show();
             }
             else
             {
                 ActivityCompat.requestPermissions(RegistrationActivity.this,new String[]{Manifest.permission.READ_CONTACTS},PReCode);
+                Snackbar.make(getWindow().getDecorView(),"Accept the Contact Permission",Snackbar.LENGTH_SHORT).show();
             }
         }
         else
         {
             ContactList();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==REQUESTCODE && requestCode==RESULT_OK && data!=null)
-        {
-            contact=data.getData();
-            Toast.makeText(RegistrationActivity.this,"ACCEPT",Toast.LENGTH_SHORT).show();
         }
     }
 }

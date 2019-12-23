@@ -1,6 +1,7 @@
 package com.WeShowedUp.radharanipoojagallery.Module;
 
 import com.WeShowedUp.radharanipoojagallery.Response.LoginResponse.LoginResponse;
+import com.WeShowedUp.radharanipoojagallery.Response.RegistrationResponse.RegistrationResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -14,6 +15,13 @@ public interface Login_Interface
     @FormUrlEncoded
     @POST("login")
     Call<LoginResponse> login(
+            @Field("phone") String phone,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("signup")
+    Call<RegistrationResponse> registration(
             @Field("phone") String phone,
             @Field("password") String password
     );
