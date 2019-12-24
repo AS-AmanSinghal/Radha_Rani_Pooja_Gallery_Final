@@ -5,11 +5,14 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,39 +52,64 @@ public class RegistrationActivity extends AppCompatActivity
         password=findViewById(R.id.registration_password);
         conf_password=findViewById(R.id.registration_conf_password);
         button=findViewById(R.id.registration_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
 
-                if (String.valueOf(password.getText()).trim().equals(String.valueOf(conf_password.getText()).trim()))
-                {
-                    registration(String.valueOf(username.getText()).trim(),String.valueOf(password.getText()).trim());
-                }
-                else
-                {
-                    Snackbar.make(getWindow().getDecorView(),"Password Does not Match",Snackbar.LENGTH_SHORT).show();
-                }
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
-        });
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                registration(String.valueOf(username.getText()).trim(), String.valueOf(password.getText()).trim(), String.valueOf(conf_password.getText()).trim());
+            }
+        };
+
+        username.addTextChangedListener(textWatcher);
+        password.addTextChangedListener(textWatcher);
+        conf_password.addTextChangedListener(textWatcher);
+        registration(String.valueOf(username.getText()).trim(), String.valueOf(password.getText()).trim(), String.valueOf(conf_password.getText()).trim());
     }
 
-    private void registration(String mobile, String password)
+    private void registration(String mobile, String password, String confirm_password)
     {
-        if (mobile.isEmpty() && password.isEmpty())
+        if (mobile.isEmpty() || password.isEmpty())
         {
-            Snackbar.make(getWindow().getDecorView(),"Enter Mobile Number/Password",Snackbar.LENGTH_SHORT).show();
+            button.setEnabled(false);
+            button.setBackgroundColor(Color.GRAY);
         }
         else
         {
-            try {
-                if (Build.VERSION.SDK_INT >= 22) {
-                    checkResequestForPermission();
-                } else {
-                    ContactList();
-                }
-            } catch (Exception e) {
-                Log.d("registration exception", "" + e);
+            if (mobile.length() != 10) {
+                button.setEnabled(false);
+                button.setBackgroundColor(Color.GRAY);
+            } else {
+                button.setEnabled(true);
+                button.setBackgroundColor(Color.parseColor("#14CC9C"));
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (password.equals(confirm_password)) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= 22) {
+                                    checkResequestForPermission();
+                                } else {
+                                    ContactList();
+                                }
+                            } catch (Exception e) {
+                                Log.d("registration exception", "" + e);
+                            }
+                        } else {
+                            Snackbar.make(getWindow().getDecorView(), "Password does not match", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         }
     }
@@ -113,7 +141,9 @@ public class RegistrationActivity extends AppCompatActivity
                 {
                     if (response.body()!=null)
                     {
-                        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                        intent.putExtra("phone", mobile);
+                        startActivity(intent);
                     }
 
                 }
@@ -149,7 +179,6 @@ public class RegistrationActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<ContactResponse> call, Response<ContactResponse> response) {
                     System.out.println(contactlist);
-                    System.out.println("Successful");
                 }
 
                 @Override

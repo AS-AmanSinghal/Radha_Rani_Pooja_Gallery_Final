@@ -1,9 +1,11 @@
 package com.WeShowedUp.radharanipoojagallery.Controller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -52,13 +54,35 @@ public class LoginActivity extends AppCompatActivity {
         checkBox = findViewById(R.id.login_rememberme);
         hideSoftKey();
 
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkEmpty();
+            }
+        };
+
+        username.addTextChangedListener(textWatcher);
+        pass.addTextChangedListener(textWatcher);
+        checkEmpty();
         if (sharedPrefManager.getString("phone").isEmpty() && sharedPrefManager.getString("password").isEmpty()) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    button.setEnabled(false);
                     progressBar.setVisibility(View.VISIBLE);
-                    loginValidation(String.valueOf(username.getText()).trim(), String.valueOf(pass.getText()).trim());
+                    new Login(String.valueOf(username.getText()), String.valueOf(pass.getText())).execute();
+//                    button.setEnabled(false);
+//                    progressBar.setVisibility(View.VISIBLE);
+//                    loginValidation(String.valueOf(username.getText()).trim(), String.valueOf(pass.getText()).trim());
                 }
             });
         } else {
@@ -85,20 +109,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginValidation(String mobile, String password) {
-        if (mobile.isEmpty() && password.isEmpty()) {
-            hideSoftKey();
-            progressBar.setVisibility(View.INVISIBLE);
-            Snackbar.make(getWindow().getDecorView(), "Enter Mobile Number/Password", Snackbar.LENGTH_SHORT).show();
-            button.setEnabled(true);
-        } else
-            {
-              new Login(mobile, password).execute();
-
-            //login(mobile, password);
+    private void checkEmpty() {
+        //progressBar.setVisibility(View.VISIBLE);
+        if (String.valueOf(username.getText()).isEmpty() || String.valueOf(pass.getText()).isEmpty()) {
+            button.setEnabled(false);
+            button.setBackgroundColor(Color.GRAY);
+        } else {
+            if (String.valueOf(username.getText()).length() != 10) {
+                button.setEnabled(false);
+                button.setBackgroundColor(Color.GRAY);
+            } else {
+                button.setEnabled(true);
+                button.setBackgroundColor(Color.parseColor("#14CC9C"));
+            }
         }
     }
-
     public class Login extends AsyncTask<Void,Void,Void>
     {
         private String mobile;
@@ -112,8 +137,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids)
         {
-            Log.d("Mobile", "doInBackground: "+mobile);
-            Log.d("Password", "doInBackground: "+password);
             try
             {
                 RetrofitClass retrofitClass = new RetrofitClass();
@@ -136,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 hideSoftKey();
                                 button.setEnabled(true);
-                                Snackbar.make(getWindow().getDecorView(), "User Does not Exists", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(getWindow().getDecorView(), "Incorrect Mobile/Password", Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -158,8 +181,6 @@ public class LoginActivity extends AppCompatActivity {
 
             return null;
         }
-    }
-    private void login(final String mobile, final String password) {
     }
 
     private void hideSoftKey() {
