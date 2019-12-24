@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -106,6 +107,7 @@ public class RegistrationActivity extends AppCompatActivity
                                 Log.d("registration exception", "" + e);
                             }
                         } else {
+                            hideSoftKey();
                             Snackbar.make(getWindow().getDecorView(), "Password does not match", Snackbar.LENGTH_SHORT).show();
                         }
                     }
@@ -117,6 +119,29 @@ public class RegistrationActivity extends AppCompatActivity
     private void ContactList()
     {
         new Contact(String.valueOf(username.getText()).trim(),String.valueOf(password.getText()).trim()).execute();
+    }
+
+    private void hideSoftKey() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null)
+            if (imm.isAcceptingText()) { // verify if the soft keyboard is open
+                imm.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
+            }
+    }
+
+    private void checkResequestForPermission() {
+        if (ContextCompat.checkSelfPermission(RegistrationActivity.this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(RegistrationActivity.this, Manifest.permission.READ_CONTACTS)) {
+                ActivityCompat.requestPermissions(RegistrationActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, PReCode);
+                Snackbar.make(getWindow().getDecorView(), "Accept the Contact Permission", Snackbar.LENGTH_SHORT).show();
+            } else {
+                ActivityCompat.requestPermissions(RegistrationActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, PReCode);
+                Snackbar.make(getWindow().getDecorView(), "Accept the Contact Permission", Snackbar.LENGTH_SHORT).show();
+            }
+        } else {
+            ContactList();
+        }
     }
 
     public class Contact extends AsyncTask<Void,Void,Void>
@@ -151,6 +176,7 @@ public class RegistrationActivity extends AppCompatActivity
                 @Override
                 public void onFailure(Call<RegistrationResponse> call, Throwable t)
                 {
+                    hideSoftKey();
                     Snackbar.make(getWindow().getDecorView(),"Bad Connection Try Again",Snackbar.LENGTH_SHORT).show();
                 }
             });
@@ -187,28 +213,6 @@ public class RegistrationActivity extends AppCompatActivity
                 }
             });
             return null;
-        }
-    }
-
-    private void checkResequestForPermission()
-    {
-        if (ContextCompat.checkSelfPermission(RegistrationActivity.this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(RegistrationActivity.this,Manifest.permission.READ_CONTACTS))
-            {
-                ActivityCompat.requestPermissions(RegistrationActivity.this,new String[]{Manifest.permission.READ_CONTACTS},PReCode);
-                Snackbar.make(getWindow().getDecorView(),"Accept the Contact Permission",Snackbar.LENGTH_SHORT).show();
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(RegistrationActivity.this,new String[]{Manifest.permission.READ_CONTACTS},PReCode);
-                Snackbar.make(getWindow().getDecorView(),"Accept the Contact Permission",Snackbar.LENGTH_SHORT).show();
-            }
-        }
-        else
-        {
-            ContactList();
         }
     }
 }
