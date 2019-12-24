@@ -10,7 +10,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
-    <string name="menu_my_photo">My Photo</string>
+    <string name="menu_my_photo">My Photos</string>
     <string name="menu_feed">Facebook Posts</string>
     <string name="menu_upload">Upload</string>
     <string name="menu_coupons">Coupons</string>

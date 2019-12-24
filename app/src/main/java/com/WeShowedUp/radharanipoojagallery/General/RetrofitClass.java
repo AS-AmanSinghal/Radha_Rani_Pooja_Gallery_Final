@@ -2,9 +2,7 @@ package com.WeShowedUp.radharanipoojagallery.General;
 
 import com.WeShowedUp.radharanipoojagallery.Module.Login_Interface;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClass

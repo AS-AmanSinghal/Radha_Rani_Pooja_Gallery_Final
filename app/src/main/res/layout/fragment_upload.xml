@@ -19,6 +19,7 @@
             app:srcCompat="@drawable/ic_upload"
             />
         <EditText
+            android:maxLines="3"
             android:id="@+id/upload_description"
             android:drawablePadding="10dp"
             android:padding="7dp"
@@ -26,16 +27,20 @@
             android:drawableStart="@drawable/ic_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:hint="Description"/>
 
         <EditText
             android:id="@+id/upload_amount"
             android:drawablePadding="10dp"
             android:padding="7dp"
+            android:inputType="number"
+            android:maxLength="5"
             android:layout_margin="20dp"
             android:drawableStart="@drawable/ic_ruppee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:hint="Amount"/>
 
         <Button

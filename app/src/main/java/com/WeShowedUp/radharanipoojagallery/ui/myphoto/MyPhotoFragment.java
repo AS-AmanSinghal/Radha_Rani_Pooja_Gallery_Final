@@ -82,6 +82,7 @@ public class MyPhotoFragment extends Fragment
                                 datum.setShares(jsonObject2.optLong("shares"));
                                 datum.setLikes(jsonObject2.optLong("likes"));
                                 datum.setStatus(jsonObject2.optLong("status"));
+                                datum.setId(jsonObject2.optString("id"));
                                 myPhotolist.add(datum);
                             }
                         } catch (JSONException e) {

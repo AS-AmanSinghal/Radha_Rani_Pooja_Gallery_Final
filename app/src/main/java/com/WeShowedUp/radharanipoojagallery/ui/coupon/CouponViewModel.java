@@ -43,24 +43,22 @@ public class CouponViewModel extends RecyclerView.Adapter<CouponViewModel.ViewHo
          holder.price.setText(String.valueOf(Mycoupon.get(i).getAmount()));
          holder.from.setText(String.valueOf(Mycoupon.get(i).getStart()));
          holder.to.setText(String.valueOf(Mycoupon.get(i).getEnd()));
-        if (Mycoupon.get(i).getStatus()==0)
-        {
-            holder.reedem.setText("Reedemed");
-            holder.imageView.setColorFilter(Color.BLUE);
-        }
-        else
-        {
+        if (Mycoupon.get(i).getStatus()==0) {
             holder.reedem.setText("Reedem");
+            holder.imageView.setColorFilter(Color.BLACK);
+        } else {
+            holder.reedem.setText("Reedemed");
         }
          holder.coupen_card.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v)
              {
                  Intent intent=new Intent(context, CouponActivity.class);
+                 intent.putExtra("status", String.valueOf(Mycoupon.get(i).getStatus()));
                  intent.putExtra("coupen_id",Mycoupon.get(i).getId());
                  intent.putExtra("start",Mycoupon.get(i).getStart());
                  intent.putExtra("end",Mycoupon.get(i).getEnd());
-                 intent.putExtra("amount",Mycoupon.get(i).getAmount());
+                 intent.putExtra("amount", String.valueOf(Mycoupon.get(i).getAmount()));
                  intent.putExtra("post_id",Mycoupon.get(i).getPostId());
                  context.startActivity(intent);
              }

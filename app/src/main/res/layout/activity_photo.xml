@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,49 +14,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_marginBottom="7dp"-->
+        <!--            android:layout_marginLeft="1dp">-->
+        <!--            <ImageView-->
+        <!--                android:id="@+id/posts_user_image"-->
+        <!--                android:layout_width="45dp"-->
+        <!--                android:layout_height="45dp"-->
+        <!--                android:layout_alignParentRight="true"-->
+        <!--                android:src="@drawable/developer" />-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:layout_marginLeft="10dp"-->
+        <!--                android:layout_marginTop="7dp">-->
+        <!--                <TextView-->
+        <!--                    android:id="@+id/name_myphoto"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:text="UsernameComehere"-->
+        <!--                    android:fontFamily="@font/roboto"-->
+        <!--                    android:textColor="@color/colorPrimary"/>-->
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="horizontal">-->
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Posted on: "-->
+        <!--                        android:textSize="10dp"/>-->
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/date_myphoto"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="22/07/2019"-->
+        <!--                        android:textSize="10dp"/>-->
+        <!--                </LinearLayout>-->
+
+        <!--            </LinearLayout>-->
+        <!--        </LinearLayout>-->
         <LinearLayout
+            android:layout_marginStart="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="1dp">
-            <ImageView
-                android:id="@+id/posts_user_image"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/developer" />
-            <LinearLayout
+            android:orientation="horizontal">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="7dp">
-                <TextView
-                    android:id="@+id/name_myphoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="UsernameComehere"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/colorPrimary"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Posted on: "
-                        android:textSize="10dp"/>
-                    <TextView
-                        android:id="@+id/date_myphoto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="22/07/2019"
-                        android:textSize="10dp"/>
-                </LinearLayout>
+                android:text="Posted on: "
+                android:textSize="15dp" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/date_myphoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22/07/2019"
+                android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,18 +97,20 @@
                     android:src="@drawable/logo"
                     />
             </LinearLayout>
-            <!--            <TextView-->
-            <!--                android:id="@+id/verified_myphoto"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:fontFamily="@font/roboto"-->
-            <!--                android:layout_marginLeft="15dp"-->
-            <!--                android:layout_marginRight="10dp"-->
-            <!--                android:layout_marginTop="20dp"-->
-            <!--                android:text="loremb hvdvduv uevhdsu djsdcuhsdc jhcbvhbcej hbdjew jh"-->
-            <!--                android:layout_marginBottom="20dp"/>-->
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/name_myphoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto"
+                android:text="data"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
