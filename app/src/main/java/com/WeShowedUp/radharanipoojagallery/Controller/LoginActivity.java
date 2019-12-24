@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.login_mobile_number);
         pass = findViewById(R.id.login_password);
         progressBar = findViewById(R.id.progressbar);
-        forgot_password = findViewById(R.id.login_forgotpassword);
+        //forgot_password = findViewById(R.id.login_forgotpassword);
         registration = findViewById(R.id.login_registration);
         sharedPrefManager= new SharedPrefManager(this);
         checkBox = findViewById(R.id.login_rememberme);
@@ -101,12 +101,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        forgot_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(getWindow().getDecorView(), "Forgot password", Snackbar.LENGTH_SHORT).show();
-            }
-        });
+//        forgot_password.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Snackbar.make(getWindow().getDecorView(), "Forgot password", Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void checkEmpty() {
