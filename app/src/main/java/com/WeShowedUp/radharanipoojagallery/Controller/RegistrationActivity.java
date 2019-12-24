@@ -1,13 +1,7 @@
 package com.WeShowedUp.radharanipoojagallery.Controller;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,13 +14,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.WeShowedUp.radharanipoojagallery.General.RetrofitClass;
 import com.WeShowedUp.radharanipoojagallery.R;
+import com.WeShowedUp.radharanipoojagallery.Response.ContactResponse.ContactResponse;
 import com.WeShowedUp.radharanipoojagallery.Response.RegistrationResponse.RegistrationResponse;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -75,39 +74,15 @@ public class RegistrationActivity extends AppCompatActivity
         }
         else
         {
-           new Login(mobile,password).execute();
-        }
-    }
-
-    public class Login extends AsyncTask<Void,Void,Void>
-    {
-        private String mobile="";
-        private String password="";
-
-        Login(String mobile,String password)
-        {
-            this.mobile=mobile;
-            this.password=password;
-        }
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            try
-            {
-                if (Build.VERSION.SDK_INT>=22)
-                {
+            try {
+                if (Build.VERSION.SDK_INT >= 22) {
                     checkResequestForPermission();
-                }
-                else
-                {
+                } else {
                     ContactList();
                 }
+            } catch (Exception e) {
+                Log.d("registration exception", "" + e);
             }
-            catch (Exception e)
-            {
-                Log.d("registration exception", ""+e);
-            }
-            return null;
         }
     }
 
@@ -151,6 +126,7 @@ public class RegistrationActivity extends AppCompatActivity
             });
 
 
+            ArrayList<String> contactlist = new ArrayList<>();
             ContentResolver contentResolver=getContentResolver();
             Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
             if (cursor!=null)
@@ -159,14 +135,28 @@ public class RegistrationActivity extends AppCompatActivity
                     String id=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
                     String name=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     Cursor phoneCursor=contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",new String[]{id},null);
-
+                    Log.d("cursor", "doInBackground: " + phoneCursor);
                     if (phoneCursor!=null)
                         while (phoneCursor.moveToNext())
                         {
                             String phoneNumber=phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            Log.d("Phone Number", "checkResequestForPermission: "+phoneNumber);
+                            contactlist.add(phoneNumber);
                         }
                 }
+            RetrofitClass retrofitClass1 = new RetrofitClass();
+            Call<ContactResponse> call1 = retrofitClass1.retrofit().contact(contactlist);
+            call1.enqueue(new Callback<ContactResponse>() {
+                @Override
+                public void onResponse(Call<ContactResponse> call, Response<ContactResponse> response) {
+                    System.out.println(contactlist);
+                    System.out.println("Successful");
+                }
+
+                @Override
+                public void onFailure(Call<ContactResponse> call, Throwable t) {
+
+                }
+            });
             return null;
         }
     }

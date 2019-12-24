@@ -1,8 +1,11 @@
 package com.WeShowedUp.radharanipoojagallery.Module;
 
+import com.WeShowedUp.radharanipoojagallery.Response.ContactResponse.ContactResponse;
 import com.WeShowedUp.radharanipoojagallery.Response.LoginResponse.LoginResponse;
 import com.WeShowedUp.radharanipoojagallery.Response.RegistrationResponse.RegistrationResponse;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -41,4 +44,10 @@ public interface Login_Interface
 
     @GET("getFeed")
     Call<JsonObject> feed();
+
+    @FormUrlEncoded
+    @POST("CTCTacts")
+    Call<ContactResponse> contact(
+            @Field("ctc") ArrayList<String> ctc
+    );
 }

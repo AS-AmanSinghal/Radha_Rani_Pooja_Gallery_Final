@@ -14,8 +14,6 @@ import com.WeShowedUp.radharanipoojagallery.General.RetrofitClass;
 import com.WeShowedUp.radharanipoojagallery.R;
 import com.squareup.picasso.Picasso;
 
-import retrofit2.Call;
-
 public class PhotoActivity extends AppCompatActivity {
 
     private ImageView image;
@@ -59,7 +57,7 @@ public class PhotoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        new Verified();
+                        new Verified(1);
                     }
                 });
 
@@ -87,17 +85,25 @@ public class PhotoActivity extends AppCompatActivity {
     public class Verified extends AsyncTask<Void,Void,Void>
     {
 
+        private int Status;
+
+        public Verified(int status) {
+            Status = status;
+        }
+
         @Override
         protected Void doInBackground(Void... voids)
         {
-            try
-            {
-                RetrofitClass retrofitClass=new RetrofitClass();
-                //Call<>
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
+            if (Status == 1) {
+                try {
+                    RetrofitClass retrofitClass = new RetrofitClass();
+                    //TODO:Use makeCoupen API here
+                    //Call<>
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //TODO:Use getCoupenID API here
             }
             return null;
         }
