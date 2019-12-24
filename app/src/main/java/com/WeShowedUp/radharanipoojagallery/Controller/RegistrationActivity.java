@@ -39,20 +39,21 @@ import retrofit2.Response;
 public class RegistrationActivity extends AppCompatActivity
 {
 
-    EditText username,password,conf_password;
+    static int PReCode = 1;
     Button button;
-    static int PReCode=1;
-    static int REQUESTCODE=1;
+    static int REQUESTCODE = 1;
+    EditText username, password, conf_password;
     Uri contact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        username=findViewById(R.id.registration_mobile_number);
-        password=findViewById(R.id.registration_password);
-        conf_password=findViewById(R.id.registration_conf_password);
-        button=findViewById(R.id.registration_btn);
+        username = findViewById(R.id.registration_mobile_number);
+        password = findViewById(R.id.registration_password);
+        conf_password = findViewById(R.id.registration_conf_password);
+        button = findViewById(R.id.registration_btn);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -77,15 +78,11 @@ public class RegistrationActivity extends AppCompatActivity
         registration(String.valueOf(username.getText()).trim(), String.valueOf(password.getText()).trim(), String.valueOf(conf_password.getText()).trim());
     }
 
-    private void registration(String mobile, String password, String confirm_password)
-    {
-        if (mobile.isEmpty() || password.isEmpty())
-        {
+    private void registration(String mobile, String password, String confirm_password) {
+        if (mobile.isEmpty() || password.isEmpty()) {
             button.setEnabled(false);
             button.setBackgroundColor(Color.GRAY);
-        }
-        else
-        {
+        } else {
             if (mobile.length() != 10) {
                 button.setEnabled(false);
                 button.setBackgroundColor(Color.GRAY);
@@ -116,9 +113,8 @@ public class RegistrationActivity extends AppCompatActivity
         }
     }
 
-    private void ContactList()
-    {
-        new Contact(String.valueOf(username.getText()).trim(),String.valueOf(password.getText()).trim()).execute();
+    private void ContactList() {
+        new Contact(String.valueOf(username.getText()).trim(), String.valueOf(password.getText()).trim()).execute();
     }
 
     private void hideSoftKey() {
@@ -144,28 +140,23 @@ public class RegistrationActivity extends AppCompatActivity
         }
     }
 
-    public class Contact extends AsyncTask<Void,Void,Void>
-    {
+    public class Contact extends AsyncTask<Void, Void, Void> {
         private String mobile;
         private String password;
 
-        public Contact(String mobile, String password)
-        {
+        public Contact(String mobile, String password) {
             this.mobile = mobile;
             this.password = password;
         }
 
         @Override
-        protected Void doInBackground(Void... voids)
-        {
-            RetrofitClass retrofitClass=new RetrofitClass();
-            Call<RegistrationResponse> call=retrofitClass.retrofit().registration(mobile,password);
+        protected Void doInBackground(Void... voids) {
+            RetrofitClass retrofitClass = new RetrofitClass();
+            Call<RegistrationResponse> call = retrofitClass.retrofit().registration(mobile, password);
             call.enqueue(new Callback<RegistrationResponse>() {
                 @Override
-                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response)
-                {
-                    if (response.body()!=null)
-                    {
+                public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+                    if (response.body() != null) {
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.putExtra("phone", mobile);
                         startActivity(intent);
@@ -174,28 +165,25 @@ public class RegistrationActivity extends AppCompatActivity
                 }
 
                 @Override
-                public void onFailure(Call<RegistrationResponse> call, Throwable t)
-                {
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
                     hideSoftKey();
-                    Snackbar.make(getWindow().getDecorView(),"Bad Connection Try Again",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView(), "Bad Connection Try Again", Snackbar.LENGTH_SHORT).show();
                 }
             });
 
 
             ArrayList<String> contactlist = new ArrayList<>();
-            ContentResolver contentResolver=getContentResolver();
-            Cursor cursor=contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
-            if (cursor!=null)
-                while (cursor.moveToNext())
-                {
-                    String id=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                    String name=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    Cursor phoneCursor=contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",new String[]{id},null);
+            ContentResolver contentResolver = getContentResolver();
+            Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+            if (cursor != null)
+                while (cursor.moveToNext()) {
+                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    Cursor phoneCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{id}, null);
                     Log.d("cursor", "doInBackground: " + phoneCursor);
-                    if (phoneCursor!=null)
-                        while (phoneCursor.moveToNext())
-                        {
-                            String phoneNumber=phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    if (phoneCursor != null)
+                        while (phoneCursor.moveToNext()) {
+                            String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                             contactlist.add(phoneNumber);
                         }
                 }
