@@ -11,17 +11,22 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_profile"-->
-<!--        android:name="com.WeShowedUp.radharanipoojagallery.ui.myphoto.GalleryFragment"-->
-<!--        android:label="@string/menu_profile"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
+    <fragment
+        android:id="@+id/nav_developer"
+        android:name="com.WeShowedUp.radharanipoojagallery.ui.developer.DeveloperFragment"
+        android:label="@string/developer"
+        tools:layout="@layout/fragment_developer" />
 
     <fragment
         android:id="@+id/nav_my_photo"
         android:name="com.WeShowedUp.radharanipoojagallery.ui.myphoto.MyPhotoFragment"
         android:label="@string/menu_my_photo"
         tools:layout="@layout/fragment_myphoto" />
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_log_out"-->
+    <!--        android:name="com.WeShowedUp.radharanipoojagallery.ui.logout.LogOutFragment"-->
+    <!--        android:label="@string/action_log_out" />-->
 
     <fragment
         android:id="@+id/nav_upload"

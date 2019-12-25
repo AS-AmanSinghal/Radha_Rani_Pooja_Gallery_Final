@@ -43,23 +43,24 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-public class UploadFragment extends Fragment
-{
+public class UploadFragment extends Fragment {
     private static int PReqcode = 1;
     private EditText description, amount;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_upload, container, false);
-        description=root.findViewById(R.id.upload_description);
-        amount=root.findViewById(R.id.upload_amount);
-        ProfileUpload=root.findViewById(R.id.upload_image);
-        button=root.findViewById(R.id.upload_btn);
+        description = root.findViewById(R.id.upload_description);
+        amount = root.findViewById(R.id.upload_amount);
+        ProfileUpload = root.findViewById(R.id.upload_image);
+        button = root.findViewById(R.id.upload_btn);
         return root;
     }
 
     private ImageView ProfileUpload;
     private Button button;
     private MultipartBody.Part image;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -67,7 +68,7 @@ public class UploadFragment extends Fragment
             @Override
             public void onClick(View view) {
 
-                if (Build.VERSION.SDK_INT>=22) {
+                if (Build.VERSION.SDK_INT >= 22) {
                     checkResequestForPermission();
                 } else {
                     openGallery();
@@ -117,34 +118,26 @@ public class UploadFragment extends Fragment
         }
     }
 
-    private void openGallery()
-    {
+    private void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image From Gallery"), PReqcode);
     }
 
-    private void checkResequestForPermission()
-    {
+    private void checkResequestForPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-        !=PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),Manifest.permission.READ_EXTERNAL_STORAGE))
-            {
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PReqcode);
+                Snackbar.make(Objects.requireNonNull(getView()), "Accept Request for Uploading Image", Snackbar.LENGTH_SHORT).show();
+            } else {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PReqcode);
                 Snackbar.make(Objects.requireNonNull(getView()), "Accept Request for Uploading Image", Snackbar.LENGTH_SHORT).show();
             }
-            else
-            {
-                ActivityCompat.requestPermissions(requireActivity(),new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PReqcode);
-                Snackbar.make(Objects.requireNonNull(getView()), "Accept Request for Uploading Image", Snackbar.LENGTH_SHORT).show();
-            }
-        }
-        else
-        {
+        } else {
             openGallery();
         }
     }

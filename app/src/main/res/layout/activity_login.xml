@@ -3,130 +3,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@drawable/background"
+    android:fillViewport="true"
     tools:context=".Controller.LoginActivity">
+
     <LinearLayout
-        android:layout_margin="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_gravity="center"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/logo"/>
+            android:layout_gravity="center"
+            android:src="@drawable/logo" />
+
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="Radhey Radhey Ji"
             android:textSize="30dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <TextView
-            android:layout_margin="20dp"
-            android:fontFamily="@font/roboto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please enter your credentials below to Sign In"
-            android:textSize="20dp"
-            android:textStyle="normal"
-            android:textColor="#8B8B93"/>
-        <EditText
-            android:textColor="#14CC9C"
-            android:id="@+id/login_mobile_number"
             android:layout_margin="20dp"
+            android:fontFamily="@font/roboto"
+            android:text="Please enter your credentials below to Sign In"
+            android:textColor="#8B8B93"
+            android:textSize="20dp"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/login_mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittextdesign"
+            android:drawableStart="@drawable/ic_call"
+            android:drawablePadding="7dp"
+            android:fontFamily="@font/roboto"
+            android:hint="Mobile Number"
             android:inputType="phone"
             android:maxLength="10"
             android:maxLines="1"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto"
-            android:drawablePadding="7dp"
-            android:drawableStart="@drawable/ic_call"
-            android:layout_width="match_parent"
-            android:hint="Mobile Number"
-            android:layout_height="40dp"
-            android:background="@drawable/edittextdesign"/>
+            android:textColor="#14CC9C" />
+
         <EditText
-            android:textColor="#14CC9C"
             android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_margin="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittextdesign"
+            android:drawableStart="@drawable/ic_password"
+            android:drawablePadding="7dp"
+            android:fontFamily="@font/roboto"
+            android:hint="Password"
             android:inputType="textPassword"
             android:maxLength="30"
             android:maxLines="1"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/roboto"
-            android:drawablePadding="7dp"
-            android:drawableStart="@drawable/ic_password"
-            android:layout_width="match_parent"
-            android:hint="Password"
-            android:layout_height="40dp"
-            android:background="@drawable/edittextdesign"/>
+            android:textColor="#14CC9C" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <CheckBox
                 android:id="@+id/login_rememberme"
-                android:shadowRadius="10"
-                android:shadowColor="#ffffff"
-                android:fontFamily="@font/roboto"
-                android:layout_margin="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/roboto"
+                android:shadowColor="#ffffff"
+                android:shadowRadius="10"
                 android:text="@string/remember_me"
-                android:textColor="#14CC9C"/>
-            <!--            <TextView-->
-            <!--                android:id="@+id/login_forgotpassword"-->
-            <!--                android:shadowRadius="10"-->
-            <!--                android:shadowColor="#ffffff"-->
-            <!--                android:fontFamily="@font/roboto"-->
-            <!--                android:layout_margin="15dp"-->
-            <!--                android:gravity="end"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Forget Password?"-->
-            <!--                android:textColor="#14CC9C"/>-->
+                android:textColor="#14CC9C" />
+
+            <TextView
+                android:id="@+id/login_forgotpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="end"
+                android:shadowColor="#ffffff"
+                android:shadowRadius="10"
+                android:text="Forget Password?"
+                android:textColor="#14CC9C" />
         </LinearLayout>
+
         <Button
             android:id="@+id/login_btn"
-            android:layout_gravity="center"
-            android:fontFamily="@font/roboto"
-            android:textSize="42px"
-            android:textColor="#ffffff"
-            android:layout_margin="10dp"
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/buttondesign"
+            android:fontFamily="@font/roboto"
+            android:padding="10dp"
             android:text="Radhey Radhey"
-            android:background="@drawable/buttondesign"/>
+            android:textColor="#ffffff"
+            android:textSize="42px" />
+
         <LinearLayout
             android:id="@+id/login_registration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
-                android:gravity="end"
-                android:fontFamily="@font/roboto"
-                android:textColor="#8B8B93"
-                android:textSize="15dp"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Don't have an Account? "/>
-            <TextView
-                android:gravity="start"
                 android:fontFamily="@font/roboto"
-                android:textColor="#14CC9C"
-                android:textSize="15dp"
+                android:gravity="end"
+                android:text="Don't have an Account? "
+                android:textColor="#8B8B93"
+                android:textSize="15dp" />
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.7"
                 android:layout_height="wrap_content"
-                android:text=" Signup here"/>
+                android:layout_weight="0.7"
+                android:fontFamily="@font/roboto"
+                android:gravity="start"
+                android:text=" Signup here"
+                android:textColor="#14CC9C"
+                android:textSize="15dp" />
         </LinearLayout>
+
         <ProgressBar
-            android:visibility="invisible"
             android:id="@+id/progressbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
     </LinearLayout>
 </ScrollView>
